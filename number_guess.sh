@@ -15,7 +15,6 @@ then
 echo -e "\nWelcome, $USERNAME! It looks like this is your first time here."
 NEW_PLAYER=$USERNAME
 else
-
 # variables for old player
 RETURN_USER=$($PSQL "SELECT username FROM users WHERE username = '$USERNAME'")
 GAMES_PLAYED=$($PSQL "SELECT games_played FROM users WHERE username = '$USERNAME'")
