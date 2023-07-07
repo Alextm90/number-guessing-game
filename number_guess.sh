@@ -9,12 +9,14 @@ echo "Enter your username:"
 read USERNAME
 USER_ID=$($PSQL "SELECT user_id FROM users WHERE username = '$USERNAME'")
 
-# check for usernmame 
+# check database for username
 if [[ -z $USER_ID ]]
 then 
 echo -e "\nWelcome, $USERNAME! It looks like this is your first time here."
 NEW_PLAYER=$USERNAME
 else
+
+# variables for old player
 RETURN_USER=$($PSQL "SELECT username FROM users WHERE username = '$USERNAME'")
 GAMES_PLAYED=$($PSQL "SELECT games_played FROM users WHERE username = '$USERNAME'")
 BEST_GAME=$($PSQL "SELECT best_game FROM users WHERE username = '$USERNAME'")
@@ -60,8 +62,15 @@ then
 echo -e "\nYou guessed it in $counter tries. The secret number was $RAN_NUMBER. Nice job!\n"
 fi
 
-# insert new data
+# insert data
 if [[ $NEW_PLAYER ]]
 then
 INSERT_NEW_PLAYER=$($PSQL "INSERT INTO users(username, games_played, best_game) VALUES('$NEW_PLAYER', 1, $counter)")
+else
+  if [[ $counter -lt $BEST_GAME ]]
+  then
+  INSERT_OLD_PLAYER=$($PSQL "UPDATE users SET best_game = $counter, games_played = $GAMES_PLAYED + 1 WHERE username = '$USERNAME'")
+  else
+  INSERT_OLD_PLAYER=$($PSQL "UPDATE users SET games_played = $GAMES_PLAYED + 1 WHERE username = '$RETURN_USER'")
+  fi
 fi
