@@ -1,5 +1,4 @@
 #!/bin/bash
- #!/bin/bash
 PSQL="psql --username=alextm90 --dbname=number_guess -t --no-align -c"
 
 # create random number
