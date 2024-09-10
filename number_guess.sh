@@ -1,5 +1,7 @@
 #!/bin/bash
- PSQL="psql --username=freecodecamp --dbname=number_guess -t --no-align -c"
+ #!/bin/bash
+PSQL="psql --username=alextm90 --dbname=number_guess -t --no-align -c"
+
 # create random number
 RAN_NUMBER=$((1 + $RANDOM % 1000))
 echo $RAN_NUMBER
